@@ -1,5 +1,21 @@
 import * as THREE from "three";
 import gsap from 'gsap';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+
+
+
+// moving camera with mouse 
+// cursor
+const cursor = {
+  x: 0,
+  y: 0
+}
+window.addEventListener('mousemove', (event) => {
+  // console.log(event.clientX) //co-ordinates of cursor on x 
+  // console.log(event.clientY) //co-ordinates of cursor on y 
+  cursor.x =( event.clientX / window.innerWidth - 0.5)
+  cursor.y = (event.clientY / window.innerWidth - 0.5)
+})
 
 let scene = new THREE.Scene();
 let camera = new THREE.PerspectiveCamera(
@@ -14,9 +30,9 @@ let material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 let mesh = new THREE.Mesh(box, material);
 scene.add(mesh);
 
-camera.position.x = 2;
-camera.position.y = 2;
-camera.position.z = 2;
+// camera.position.x = 2;
+// camera.position.y = 2;
+camera.position.z = 3;
 camera.lookAt(mesh.position)
 scene.add(camera);
 
@@ -44,12 +60,26 @@ function animate() {
   
   renderer.render(scene, camera);
   
-  mesh.rotation.y = clock.getElapsedTime();
+  // {animation}
+  // mesh.rotation.y = clock.getElapsedTime();
+
+
+  // {Rotating the cube using mouse}
+  // camera.position.x = cursor.x * 10
+  // camera.position.y = cursor.y * 10
+  // camera.lookAt(mesh.position)
+
+  // camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3
+  // camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3
+  // camera.position.y = cursor.y * 5
+  // camera.lookAt(mesh.position)
 
   // Optional camera movement (commented out)
   // camera.position.y = Math.sin(clock.getElapsedTime());
   // camera.position.x = Math.cos(clock.getElapsedTime());
   // camera.lookAt(scene.position);
+
+
 }
 
 // Start the animation loop
