@@ -36,7 +36,12 @@ camera.position.z = 3;
 camera.lookAt(mesh.position)
 scene.add(camera);
 
+
 const canvas = document.querySelector('canvas.webgl');
+// {orbit Controls}
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
+
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 
 // Handle window resize
@@ -58,28 +63,31 @@ let clock = new THREE.Clock();
 function animate() {
   window.requestAnimationFrame(animate);
   
-  renderer.render(scene, camera);
   
   // {animation}
   // mesh.rotation.y = clock.getElapsedTime();
-
-
+  
+  
   // {Rotating the cube using mouse}
   // camera.position.x = cursor.x * 10
   // camera.position.y = cursor.y * 10
   // camera.lookAt(mesh.position)
-
+  
   // camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3
   // camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3
   // camera.position.y = cursor.y * 5
   // camera.lookAt(mesh.position)
-
+  
   // Optional camera movement (commented out)
   // camera.position.y = Math.sin(clock.getElapsedTime());
   // camera.position.x = Math.cos(clock.getElapsedTime());
   // camera.lookAt(scene.position);
+  
+  //update controls
 
+  controls.update()
 
+  renderer.render(scene, camera);
 }
 
 // Start the animation loop
