@@ -9,13 +9,16 @@ let camera = new THREE.PerspectiveCamera(
   1000
 );
 
-camera.position.z = 5;
-scene.add(camera);
-
 let box = new THREE.BoxGeometry(1, 1, 1);
 let material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 let mesh = new THREE.Mesh(box, material);
 scene.add(mesh);
+
+camera.position.x = 2;
+camera.position.y = 2;
+camera.position.z = 2;
+camera.lookAt(mesh.position)
+scene.add(camera);
 
 const canvas = document.querySelector('canvas.webgl');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -31,7 +34,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.render(scene, camera);
 
 // GSAP animation
-gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 });
+// gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 });
 
 // Clock for continuous animation
 let clock = new THREE.Clock();
