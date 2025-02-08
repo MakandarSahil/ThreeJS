@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import gsap from 'gsap';
 
 let scene = new THREE.Scene();
 let camera = new THREE.PerspectiveCamera(
@@ -16,9 +17,10 @@ let material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 let mesh = new THREE.Mesh(box, material);
 scene.add(mesh);
 
-const canvas = document.querySelector("canvas");
+const canvas = document.querySelector('canvas.webgl');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 
+// Handle window resize
 window.addEventListener("resize", () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -28,11 +30,24 @@ window.addEventListener("resize", () => {
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.render(scene, camera);
 
+// GSAP animation
+gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 });
+
+// Clock for continuous animation
 let clock = new THREE.Clock();
+
 function animate() {
   window.requestAnimationFrame(animate);
+  
   renderer.render(scene, camera);
+  
   mesh.rotation.y = clock.getElapsedTime();
+
+  // Optional camera movement (commented out)
+  // camera.position.y = Math.sin(clock.getElapsedTime());
+  // camera.position.x = Math.cos(clock.getElapsedTime());
+  // camera.lookAt(scene.position);
 }
 
+// Start the animation loop
 animate();
